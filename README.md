@@ -50,7 +50,7 @@ Automatic updating of the script may require your confirmation.
 1. Установить одно из браузерных расширений для выполнения пользовательских скриптов.  
    Tampermonkey: [Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=ru), [Firefox](https://addons.mozilla.org/ru/firefox/addon/tampermonkey/), [Opera](https://addons.opera.com/ru/extensions/details/tampermonkey-beta/), [Edge](https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd?hl=ru-RU)  
    Violentmonkey: [Chrome](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag?hl=ru), [Firefox](https://addons.mozilla.org/ru/firefox/addon/violentmonkey/), [Maxthon](https://extension.maxthon.com/detail/index.php?view_id=1680), [Edge](https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao?hl=ru-RU)   
-2. Перейти [сюда](/../../raw/master/FreeruCompanion.user.js).
+2. Перейти [сюда](/../../raw/main/FreeruCompanion.user.js).
 3. Подтвердить установку скрипта.
 
 При автоматическом обновлении скрипта может потребоваться ваше подтверждение.
