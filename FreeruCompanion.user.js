@@ -8,17 +8,20 @@
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/master/GiveawayCompanion.user.js
 // @downloadURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/master/GiveawayCompanion.user.js
 // @description Auto confirm tasks
-// @description Автоматическое подтверждение заданий
-// @match *://freeru.vip/*
+// @description:ru Автоматическое подтверждение заданий
+// @match *://freeru.vip/games/cases*
 // @grant none
 // ==/UserScript==
 
 (function() {
   'use strict';
-
-  // Первый скрипт
+ setTimeout(function() {
   var buttons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
   buttons.forEach(function(button) {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    });
     var event = new MouseEvent('click', {
       bubbles: true,
       cancelable: true,
@@ -33,12 +36,15 @@
       metaKey: false,
     });
     button.dispatchEvent(event);
-    event.preventDefault();
   });
 
-  // Второй скрипт
-  var buttons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-  buttons.forEach(function(button) {
+  var buttons_con = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+  buttons_con.forEach(function(button) {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    });
     button.click();
   });
+ }, 2000);
 })();
