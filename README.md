@@ -4,9 +4,9 @@ This script adds useful features to freeru site. Allows you to complete tasks qu
 
 The script does not complete subscriptions/reposts/likes on social networks, but such tasks can be completed automatically if they have no verification or if you have completed the same task before and have not cancelled the action.
 
-The script runs automatically as soon as the website page loads.
+The script runs after 2 sec.
 
-There is a known issue where the YT page opens automatically when you load a giveaway page.
+There is a known issue where the one page opens automatically when you load a giveaway page.
 
 [Changelog](CHANGELOG.md)
 
@@ -33,9 +33,9 @@ Automatic updating of the script may require your confirmation.
 
 Скрипт не выполняет подписки/репосты/лайки в социальных сетях, но подобные задания могут быть выполнены автоматически, если они не имеют проверки или если вы раньше уже выполняли такое же задание и не отменили действие.
 
-Скрипт работает автоматически, как только загружается страница сайта.
+Скрипт работает после 2 секунд, как загружен сайт.
 
-Известна проблема, при которой открывается YT страница автоматически при загрузке страницы с выполнением заданий.
+Известна проблема, при которой открывается одна страница автоматически при загрузке страницы с выполнением заданий.
 
 [Список изменений](CHANGELOG.md)
 
