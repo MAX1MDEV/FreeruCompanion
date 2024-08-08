@@ -8,6 +8,9 @@ The script bar looks like this:
 
 <img src="images/script_bar.png" title="The script bar" alt="The script bar">
 
+Video illustration of the script bar:
+![The script bar](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/script_bar.gif)
+
 [Changelog](CHANGELOG.md)
 
 **Disclaimer: the usage of this script may violate the Terms of Service of the sites it runs on. Use at your own risk.**
@@ -36,6 +39,9 @@ Automatic updating of the script may require your confirmation.
 Панель скрипта выглядит так:
 
 <img src="images/script_bar.png" title="Панель скрипта" alt="Панель скрипта">
+
+Видеоиллюстрация панели скрипта:
+![Панель скрипта](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/script_bar.gif)
 
 [Список изменений](CHANGELOG.md)
 
