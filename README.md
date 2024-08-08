@@ -8,6 +8,9 @@ The script runs after 2 sec.
 
 There is a known issue where the one page opens automatically when you load a giveaway page.
 
+The script bar looks like this:
+/../../raw/main/images/script_bar.png
+
 [Changelog](CHANGELOG.md)
 
 **Disclaimer: the usage of this script may violate the Terms of Service of the sites it runs on. Use at your own risk.**
@@ -36,6 +39,9 @@ Automatic updating of the script may require your confirmation.
 Скрипт работает после 2 секунд, как загружен сайт.
 
 Известна проблема, при которой открывается одна страница автоматически при загрузке страницы с выполнением заданий.
+
+Панель скрипта выглядит так:
+/../../raw/main/images/script_bar.png
 
 [Список изменений](CHANGELOG.md)
 
