@@ -4,10 +4,6 @@ This script adds useful features to freeru site. Allows you to complete tasks qu
 
 The script does not complete subscriptions/reposts/likes on social networks, but such tasks can be completed automatically if they have no verification or if you have completed the same task before and have not cancelled the action.
 
-The script runs after 2 sec.
-
-There is a known issue where the one page opens automatically when you load a giveaway page.
-
 The script bar looks like this:
 
 <img src="images/script_bar.png" title="The script bar" alt="The script bar">
@@ -36,10 +32,6 @@ Automatic updating of the script may require your confirmation.
 Данный скрипт добавляет полезные функции на сайте с раздачами игр. Позволяет быстро выполнять задания.
 
 Скрипт не выполняет подписки/репосты/лайки в социальных сетях, но подобные задания могут быть выполнены автоматически, если они не имеют проверки или если вы раньше уже выполняли такое же задание и не отменили действие.
-
-Скрипт работает после 2 секунд, как загружен сайт.
-
-Известна проблема, при которой открывается одна страница автоматически при загрузке страницы с выполнением заданий.
 
 Панель скрипта выглядит так:
 
