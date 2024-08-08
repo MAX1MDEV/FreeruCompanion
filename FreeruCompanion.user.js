@@ -40,7 +40,6 @@
   mainButton.style.padding = '10px 20px';
   container.appendChild(mainButton);
 
-  // Create the language button
   var langButton = document.createElement('button');
   langButton.textContent = 'RU';
   langButton.style.background = 'white';
