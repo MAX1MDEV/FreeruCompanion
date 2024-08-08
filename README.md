@@ -9,6 +9,7 @@ The script runs after 2 sec.
 There is a known issue where the one page opens automatically when you load a giveaway page.
 
 The script bar looks like this:
+
 <img src="images/script_bar.png" title="The script bar" alt="The script bar">
 
 [Changelog](CHANGELOG.md)
@@ -41,6 +42,7 @@ Automatic updating of the script may require your confirmation.
 Известна проблема, при которой открывается одна страница автоматически при загрузке страницы с выполнением заданий.
 
 Панель скрипта выглядит так:
+
 <img src="images/script_bar.png" title="Панель скрипта" alt="Панель скрипта">
 
 [Список изменений](CHANGELOG.md)
