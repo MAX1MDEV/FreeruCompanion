@@ -10,6 +10,7 @@
 // @description Auto confirm tasks
 // @description:ru Автоматическое подтверждение заданий
 // @match ://freeru.vip/games/cases*
+// @match ://freeru.vip/games/giveaways/games*
 // @grant none
 // ==/UserScript==
 
