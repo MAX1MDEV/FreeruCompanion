@@ -1,4 +1,9 @@
 ## Changelog
+### v4.0 (2024-08-20)
+* Added auto-sell checkbox.
+* Added automatic opening of cases.
+* Added automatic receipt of the key on the giveaway page.
+**
 ### v3.0 (2024-08-11)
 * Changed the handler, now all tasks are completed.
 ***
@@ -15,6 +20,11 @@
 ***
 
 ## Список изменений
+### v4.0 (2024-08-20)
+* Добавлен чек-бокс автоматической продажи.
+* Добавлено автоматическое открытие кейсов.
+* Добавлено автоматичесое получение ключа на странице раздачи.
+**
 ### v3.0 (2024-08-11)
 * Изменен обработчик, теперь все задания выполняются.
 ***
