@@ -10,7 +10,7 @@ The script bar looks like this:
 
 Video illustration of the script bar:
 
-![The script bar](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/script_bar_v.4.0.gif)
+![The script bar](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/scipt_bar_v.4.0.gif)
 
 [Changelog](CHANGELOG.md)
 
@@ -43,7 +43,7 @@ Automatic updating of the script may require your confirmation.
 
 Видеоиллюстрация панели скрипта:
 
-![Панель скрипта](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/script_bar_v.4.0.gif)
+![Панель скрипта](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/scipt_bar_v.4.0.gif)
 
 [Список изменений](CHANGELOG.md)
 
