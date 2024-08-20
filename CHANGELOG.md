@@ -3,7 +3,7 @@
 * Added auto-sell checkbox.
 * Added automatic opening of cases.
 * Added automatic receipt of the key on the giveaway page.
-**
+***
 ### v3.0 (2024-08-11)
 * Changed the handler, now all tasks are completed.
 ***
