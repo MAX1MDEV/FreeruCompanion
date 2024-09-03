@@ -14,7 +14,7 @@ Video illustration of the script bar:
 
 [Changelog](CHANGELOG.md)
 
-**Disclaimer: the usage of this script may violate the Terms of Service of the sites it runs on. Use at your own risk.**
+**Disclaimer: the usage of this script may violate the Terms of Service of the site it runs on. Use at your own risk.**
 
 ### Supported site
 | Site               | Features
@@ -47,7 +47,7 @@ Automatic updating of the script may require your confirmation.
 
 [Список изменений](CHANGELOG.md)
 
-**Отказ от ответственности: использование данного скрипта может нарушать правила сайтов, на которых он используется. Используйте на свой страх и риск.**
+**Отказ от ответственности: использование данного скрипта может нарушать правила сайта, на котором он используется. Используйте на свой страх и риск.**
 
 ### Поддерживаемые сайты
 | Сайт               | Функции
