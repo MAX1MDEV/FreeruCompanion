@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MAX1MDEV
 // @namespace MAX1MDEV
-// @version 4.1
+// @version 4.3
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -11,6 +11,7 @@
 // @description:ru Автоматическое подтверждение заданий
 // @match ://freeru.lol/games/cases*
 // @match ://freeru.lol/games/giveaways/games*
+// @icon https://freeru.lol/_nuxt/img/logo.8508f2a.png
 // @grant none
 // ==/UserScript==
 
@@ -188,7 +189,7 @@
   }
 
   function giveawayClick() {
-    var button = document.querySelector('.giveaway-summary__buttons');
+    var button = document.querySelector('.get-reward-button.btn.btn-blue.btn-lg');
     if (button) {
       button.click();
     }
