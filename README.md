@@ -19,7 +19,7 @@ Video illustration of the script bar:
 ### Supported site
 | Site               | Features
 | :----------------- | :-----------------
-| freeru.lol         | Auto confirm tasks, auto-sell, automatic opening of cases, automatic receipt of the key on the giveaway page
+| [freeru.lol](https://freeru.lol/)         | Auto confirm tasks, auto-sell, automatic opening of cases, automatic receipt of the key on the giveaway page
 
 ### Installation
 1. Install one of the browser extensions to run user scripts.  
@@ -52,7 +52,7 @@ Automatic updating of the script may require your confirmation.
 ### Поддерживаемые сайты
 | Сайт               | Функции
 | :----------------- | :-----------------
-| freeru.lol         | Автоматическое подтверждение заданий, автоматическая продажа, автоматическое открытие кейсов, автоматическое получение ключа на странице раздачи
+| [freeru.lol](https://freeru.lol/)         | Автоматическое подтверждение заданий, автоматическая продажа, автоматическое открытие кейсов, автоматическое получение ключа на странице раздачи
 
 ### Установка
 1. Установить одно из браузерных расширений для выполнения пользовательских скриптов.  
