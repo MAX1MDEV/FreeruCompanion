@@ -6,7 +6,7 @@ The script does not complete subscriptions/reposts/likes on social networks, but
 
 The script bar looks like this:
 
-<img src="images/script_bar_v.4.0.png" title="The script bar" alt="The script bar">
+<img src="images/script_bar_v.4.0_en.png" title="The script bar" alt="The script bar">
 
 Video illustration of the script bar:
 
@@ -39,7 +39,7 @@ Automatic updating of the script may require your confirmation.
 
 Панель скрипта выглядит так:
 
-<img src="images/script_bar_v.4.0.png" title="Панель скрипта" alt="Панель скрипта">
+<img src="images/script_bar_v.4.0_ru.png" title="Панель скрипта" alt="Панель скрипта">
 
 Видеоиллюстрация панели скрипта:
 
