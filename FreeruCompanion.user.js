@@ -154,25 +154,31 @@
   }
 
   function confirmTasks() {
-    var buttons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
-    buttons.forEach(function(button) {
-      if (button.tagName.toLowerCase() === 'button') {
-        button.click();
-      } else {
-        var clickEvent = new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-          view: window,
-        });
-        button.dispatchEvent(clickEvent);
-      }
-    });
-
-    var buttons_con = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-    buttons_con.forEach(function(button) {
+  var buttons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
+  buttons.forEach(function(button) {
+    if (button.tagName.toLowerCase() === 'button') {
       button.click();
-    });
+    } else {
+      var clickEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+      button.dispatchEvent(clickEvent);
+    }
+  });
+
+  var buttons_con = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+  let i = 0;
+  function clickNextButton() {
+    if (i < buttons_con.length) {
+      buttons_con[i].click();
+      i++;
+      setTimeout(clickNextButton, 3000);
+    }
   }
+  clickNextButton();
+}
 
   function emulateClick() {
     var button = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
