@@ -154,30 +154,24 @@
   }
 
   function confirmTasks() {
-  var buttons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
-  buttons.forEach(function(button) {
-    if (button.tagName.toLowerCase() === 'button') {
-      button.click();
-    } else {
-      var clickEvent = new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      });
-      button.dispatchEvent(clickEvent);
-    }
-  });
-
-  var buttons_con = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+  var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
+  var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
   let i = 0;
-  function clickNextButton() {
-    if (i < buttons_con.length) {
-      buttons_con[i].click();
-      i++;
-      setTimeout(clickNextButton, 3000);
+
+  function clickNextPair() {
+    if (i < blueButtons.length) {
+      blueButtons[i].click();
+      setTimeout(function() {
+        if (i < borderedButtons.length) {
+          borderedButtons[i].click();
+        }
+        i++;
+        setTimeout(clickNextPair, 2000);
+      }, 2000);
     }
   }
-  clickNextButton();
+
+  clickNextPair();
 }
 
   function emulateClick() {
