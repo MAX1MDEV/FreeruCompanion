@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MAX1MDEV
 // @namespace MAX1MDEV
-// @version 4.5
+// @version 4.6
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
