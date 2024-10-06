@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MAX1MDEV
 // @namespace MAX1MDEV
-// @version 4.6
+// @version 5.0
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -96,7 +96,6 @@
 
   mainButton.addEventListener('click', function() {
     confirmTasks();
-    window.open('', '_blank').close();
   });
 
   mainButton.addEventListener('mouseover', function() {
@@ -152,28 +151,44 @@
   } else {
     toggleSwitch.checked = false;
   }
+  var openedWindows = [];
 
   function confirmTasks() {
-  var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
-  var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-  let i = 0;
+    var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
+    var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+    let i = 0;
 
-  function clickNextPair() {
-    if (i < blueButtons.length) {
-      blueButtons[i].click();
-      setTimeout(function() {
-        if (i < borderedButtons.length) {
-          borderedButtons[i].click();
+    function clickNextPair() {
+      if (i < blueButtons.length) {
+        blueButtons[i].click();
+
+        
+        var newWindow = window.open('', '_blank');
+        if (newWindow) {
+          openedWindows.push(newWindow);
         }
-        i++;
-        setTimeout(clickNextPair, 2000);
-      }, 2000);
+
+        setTimeout(function() {
+          if (i < borderedButtons.length) {
+            borderedButtons[i].click();
+          }
+          i++;
+          setTimeout(clickNextPair, 2000);
+        }, 2000);
+      }
     }
+
+    clickNextPair();
   }
 
-  clickNextPair();
-}
-
+  function closeOpenedWindows() {
+    for (var i = 0; i < openedWindows.length; i++) {
+      if (!openedWindows[i].closed) {
+        openedWindows[i].close();
+      }
+    }
+  }
+  setInterval(closeOpenedWindows, 3000);
   function emulateClick() {
     var button = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
     if (button) {
