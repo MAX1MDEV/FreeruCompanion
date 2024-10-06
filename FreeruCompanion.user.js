@@ -162,7 +162,6 @@
       if (i < blueButtons.length) {
         blueButtons[i].click();
 
-        
         var newWindow = window.open('', '_blank');
         if (newWindow) {
           openedWindows.push(newWindow);
@@ -188,7 +187,7 @@
       }
     }
   }
-  setInterval(closeOpenedWindows, 3000);
+  setInterval(closeOpenedWindows, 300);
   function emulateClick() {
     var button = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
     if (button) {
