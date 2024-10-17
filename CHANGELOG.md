@@ -1,4 +1,8 @@
 ## Changelog
+### v6.0 (2024-10-17)
+* Added brute system to confirm tasks, now you just need to click once "Confirm" and you can use your browser further.
+* Removed the ability of the site to open new windows (If this happens, write to [issues](https://github.com/MAX1MDEV/FreeruCompanion/issues)).
+***
 ### v5.0 (2024-10-06)
 * Completed confirmation function, after site update.
 ***
@@ -36,8 +40,9 @@
 ***
 
 ## Список изменений
-### v5.0 (2024-10-06)
-* Завершена функция подтверждения заданий, после обновления сайта.
+### v6.0 (2024-10-17)
+* Добавлена система брут для подтверждения заданий, теперь достаточно просто нажать один раз кнопку "Подтвердить" и можете использовать свой браузер дальше.
+* Убрана возможность сайта открывать новые окна (Если такое будет, пишите в [issues](https://github.com/MAX1MDEV/FreeruCompanion/issues)).
 ***
 ### v4.6 (2024-10-05)
 * Изменена логика работы функции подтверждения заданий.
