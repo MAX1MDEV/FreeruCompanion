@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MAX1MDEV
 // @namespace MAX1MDEV
-// @version 5.0
+// @version 6.0
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -17,6 +17,10 @@
 
 (function() {
   'use strict';
+
+  window.open = function() {
+    return null;
+  };
 
   var container = document.createElement('div');
   container.style.position = 'fixed';
@@ -135,13 +139,13 @@
   });
 
   toggleSwitch.addEventListener('change', function() {
-  if (toggleSwitch.checked) {
-    localStorage.setItem('autoSellEnabled', 'true');
-    setInterval(autoSell, 1000);
-  } else {
-    localStorage.setItem('autoSellEnabled', 'false');
-    clearInterval(autoSell);
-  }
+    if (toggleSwitch.checked) {
+      localStorage.setItem('autoSellEnabled', 'true');
+      setInterval(autoSell, 1000);
+    } else {
+      localStorage.setItem('autoSellEnabled', 'false');
+      clearInterval(autoSell);
+    }
   });
 
   var autoSellEnabled = localStorage.getItem('autoSellEnabled');
@@ -151,30 +155,33 @@
   } else {
     toggleSwitch.checked = false;
   }
+
   var openedWindows = [];
 
   function confirmTasks() {
-    var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
-    var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-    let i = 0;
-
     function clickNextPair() {
-      if (i < blueButtons.length) {
-        blueButtons[i].click();
+      var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
+      var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
 
-        var newWindow = window.open('', '_blank');
-        if (newWindow) {
-          openedWindows.push(newWindow);
+      let i = 0;
+
+      while (i < blueButtons.length || i < borderedButtons.length) {
+        if (i < blueButtons.length) {
+          blueButtons[i].click();
         }
 
-        setTimeout(function() {
-          if (i < borderedButtons.length) {
-            borderedButtons[i].click();
-          }
-          i++;
-          setTimeout(clickNextPair, 2000);
-        }, 2000);
+        if (i < borderedButtons.length) {
+          borderedButtons[i].click();
+        }
+
+        i++;
       }
+
+      if (blueButtons.length === 0 && borderedButtons.length === 0) {
+        return;
+      }
+
+      setTimeout(clickNextPair, 2000);
     }
 
     clickNextPair();
@@ -187,7 +194,9 @@
       }
     }
   }
+
   setInterval(closeOpenedWindows, 300);
+
   function emulateClick() {
     var button = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
     if (button) {
