@@ -34,7 +34,7 @@
 ### v1.1 (2024-08-06)
 * Timer for script execution is set, there's only one page open right now.
 ***
-### v1.0 (2024-11-05)
+### v1.0 (2024-08-05)
 * Initial release.
 
 ***
