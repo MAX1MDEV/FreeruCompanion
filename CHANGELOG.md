@@ -1,4 +1,7 @@
 ## Changelog
+### v7.0 (2024-11-08)
+* Added a stop script button to stop the script from running without reloading the page to run jobs.
+***
 ### v6.5 (2024-11-07)
 * Added a checkbox that can be used to run a task without disabling the script.
 ***
@@ -42,7 +45,10 @@
 
 ***
 
-## Список изменений\
+## Список изменений
+### v7.0 (2024-11-08)
+* Добавлена кнопка остановки работы скрипта для того, чтобы остановить его без перезагрузки страницы для выполнения заданий.
+***
 ### v6.5 (2024-11-07)
 * Добавлен чек-бокс, с помощью которого можно выполнить задание без отключения скрипта.
 ***
