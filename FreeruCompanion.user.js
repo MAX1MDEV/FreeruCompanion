@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name Freeru Companion
-// @author MAX1MDEV
+// @author MaximDev
 // @namespace MAX1MDEV
-// @version 6.0
+// @version 6.5
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
 // @downloadURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
-// @description Auto confirm tasks
-// @description:ru Автоматическое подтверждение заданий
+// @description Auto confirm tasks and control tab opening
+// @description:ru Автоматическое подтверждение заданий и контроль открытия вкладок
 // @match ://freeru.lol/games/cases*
 // @match ://freeru.lol/games/giveaways/games*
 // @icon https://freeru.lol/_nuxt/img/logo.8508f2a.png
@@ -18,9 +18,14 @@
 (function() {
   'use strict';
 
-  window.open = function() {
-    return null;
-  };
+  var preventTabOpening = false;
+  var originalWindowOpen = window.open;
+
+  function updateWindowOpen() {
+    window.open = preventTabOpening ? function() { return null; } : originalWindowOpen;
+  }
+
+  updateWindowOpen();
 
   var container = document.createElement('div');
   container.style.position = 'fixed';
@@ -75,6 +80,33 @@
   toggleSwitch.style.borderRadius = '5px';
   toggleContainer.appendChild(toggleSwitch);
 
+  var preventTabContainer = document.createElement('div');
+  preventTabContainer.style.display = 'flex';
+  preventTabContainer.style.alignItems = 'center';
+  preventTabContainer.style.marginTop = '5px';
+  container.appendChild(preventTabContainer);
+
+  var preventTabLabel = document.createElement('span');
+  preventTabLabel.textContent = 'Блокировать открытие вкладок';
+  preventTabLabel.style.color = 'white';
+  preventTabLabel.style.border = 'none';
+  preventTabLabel.style.background = 'green';
+  preventTabLabel.style.padding = '10px 20px';
+  preventTabLabel.style.borderRadius = '5px';
+  preventTabLabel.style.marginRight = '5px';
+  preventTabLabel.style.userSelect = 'none';
+  preventTabContainer.appendChild(preventTabLabel);
+
+  var preventTabSwitch = document.createElement('input');
+  preventTabSwitch.type = 'checkbox';
+  preventTabSwitch.id = 'prevent-tab-toggle';
+  preventTabSwitch.style.width = '31px';
+  preventTabSwitch.style.height = '31px';
+  preventTabSwitch.style.background = 'green';
+  preventTabSwitch.style.accentColor = 'green';
+  preventTabSwitch.style.borderRadius = '5px';
+  preventTabContainer.appendChild(preventTabSwitch);
+
   var langButton = document.createElement('button');
   langButton.textContent = 'RU';
   langButton.style.background = 'green';
@@ -91,39 +123,13 @@
       langButton.textContent = 'RU';
       mainButton.textContent = 'Подтвердить';
       toggleLabel.textContent = 'Авто-продажа';
+      preventTabLabel.textContent = 'Блокировать открытие вкладок';
     } else {
       langButton.textContent = 'EN';
       mainButton.textContent = 'Confirm';
-      toggleLabel.textContent = 'Auto-sell'
+      toggleLabel.textContent = 'Auto-sell';
+      preventTabLabel.textContent = 'Block tabs from opening';
     }
-  });
-
-  mainButton.addEventListener('click', function() {
-    confirmTasks();
-  });
-
-  mainButton.addEventListener('mouseover', function() {
-    mainButton.style.background = 'darkgreen';
-    mainButton.style.color = 'white';
-    mainButton.style.cursor = 'pointer';
-  });
-
-  mainButton.addEventListener('mouseout', function() {
-    mainButton.style.background = 'green';
-    mainButton.style.color = 'white';
-    mainButton.style.cursor = 'default';
-  });
-
-  langButton.addEventListener('mouseover', function() {
-    langButton.style.background = 'darkgreen';
-    langButton.style.color = 'white';
-    langButton.style.cursor = 'pointer';
-  });
-
-  langButton.addEventListener('mouseout', function() {
-    langButton.style.background = 'green';
-    langButton.style.color = 'white';
-    langButton.style.cursor = 'default';
   });
 
   toggleSwitch.addEventListener('mouseover', function() {
@@ -156,46 +162,33 @@
     toggleSwitch.checked = false;
   }
 
-  var openedWindows = [];
+  preventTabSwitch.addEventListener('mouseover', function() {
+    preventTabSwitch.style.background = 'darkgreen';
+    preventTabSwitch.style.accentColor = 'darkgreen';
+    preventTabSwitch.style.cursor = 'pointer';
+  });
 
-  function confirmTasks() {
-    function clickNextPair() {
-      var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
-      var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+  preventTabSwitch.addEventListener('mouseout', function() {
+    preventTabSwitch.style.background = 'green';
+    preventTabSwitch.style.accentColor = 'green';
+    preventTabSwitch.style.cursor = 'default';
+  });
 
-      let i = 0;
+  preventTabSwitch.addEventListener('change', function() {
+    preventTabOpening = preventTabSwitch.checked;
+    localStorage.setItem('preventTabOpening', preventTabOpening.toString());
+    updateWindowOpen();
+  });
 
-      while (i < blueButtons.length || i < borderedButtons.length) {
-        if (i < blueButtons.length) {
-          blueButtons[i].click();
-        }
-
-        if (i < borderedButtons.length) {
-          borderedButtons[i].click();
-        }
-
-        i++;
-      }
-
-      if (blueButtons.length === 0 && borderedButtons.length === 0) {
-        return;
-      }
-
-      setTimeout(clickNextPair, 2000);
-    }
-
-    clickNextPair();
+  var storedPreventTabOpening = localStorage.getItem('preventTabOpening');
+  if (storedPreventTabOpening === 'true') {
+    preventTabSwitch.checked = true;
+    preventTabOpening = true;
+  } else {
+    preventTabSwitch.checked = false;
+    preventTabOpening = false;
   }
-
-  function closeOpenedWindows() {
-    for (var i = 0; i < openedWindows.length; i++) {
-      if (!openedWindows[i].closed) {
-        openedWindows[i].close();
-      }
-    }
-  }
-
-  setInterval(closeOpenedWindows, 300);
+  updateWindowOpen();
 
   function emulateClick() {
     var button = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
@@ -228,4 +221,5 @@
 
   setInterval(giveawayClick, 300);
   setInterval(emulateClick, 300);
+
 })();
