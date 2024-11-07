@@ -1,4 +1,7 @@
 ## Changelog
+### v6.5 (2024-11-07)
+* Added a checkbox that can be used to run a task without disabling the script.
+***
 ### v6.0 (2024-10-17)
 * Added brute system to confirm tasks, now you just need to click once "Confirm" and you can use your browser further.
 * Removed the ability of the site to open new windows (If this happens, write to [issues](https://github.com/MAX1MDEV/FreeruCompanion/issues)).
@@ -39,7 +42,10 @@
 
 ***
 
-## Список изменений
+## Список изменений\
+### v6.5 (2024-11-07)
+* Добавлен чек-бокс, с помощью которого можно выполнить задание без отключения скрипта.
+***
 ### v6.0 (2024-10-17)
 * Добавлена брут система для подтверждения заданий, теперь достаточно просто нажать один раз кнопку "Подтвердить" и можете использовать свой браузер дальше.
 * Убрана возможность сайта открывать новые окна (Если такое будет, пишите в [issues](https://github.com/MAX1MDEV/FreeruCompanion/issues)).
