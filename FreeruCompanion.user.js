@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 6.6
+// @version 7.0
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -20,6 +20,7 @@
 
   var preventTabOpening = false;
   var originalWindowOpen = window.open;
+  var isConfirmingTasks = false;
 
   function updateWindowOpen() {
     window.open = preventTabOpening ? function() { return null; } : originalWindowOpen;
@@ -40,7 +41,7 @@
   container.style.display = 'flex';
   container.style.flexDirection = 'column';
   container.style.justifyContent = 'space-between';
-  container.style.zIndex = '1000';
+  container.style.zIndex = '99999999';
   document.body.appendChild(container);
 
   var mainButton = document.createElement('button');
@@ -121,31 +122,37 @@
   langButton.addEventListener('click', function() {
     if (langButton.textContent === 'EN') {
       langButton.textContent = 'RU';
-      mainButton.textContent = 'Подтвердить';
+      mainButton.textContent = isConfirmingTasks ? 'Остановить' : 'Подтвердить';
       toggleLabel.textContent = 'Авто-продажа';
       preventTabLabel.textContent = 'Блокировать открытие вкладок';
     } else {
       langButton.textContent = 'EN';
-      mainButton.textContent = 'Confirm';
+      mainButton.textContent = isConfirmingTasks ? 'Stop' : 'Confirm';
       toggleLabel.textContent = 'Auto-sell';
       preventTabLabel.textContent = 'Block tabs from opening';
     }
   });
 
-  // Add hover effects to mainButton
+  mainButton.addEventListener('click', function() {
+    if (isConfirmingTasks) {
+      stopConfirmTasks();
+    } else {
+      startConfirmTasks();
+    }
+  });
+
   mainButton.addEventListener('mouseover', function() {
-    mainButton.style.background = 'darkgreen';
+    mainButton.style.background = isConfirmingTasks ? '#FF8C00' : 'darkgreen';
     mainButton.style.color = 'white';
     mainButton.style.cursor = 'pointer';
   });
 
   mainButton.addEventListener('mouseout', function() {
-    mainButton.style.background = 'green';
+    mainButton.style.background = isConfirmingTasks ? 'red' : 'green';
     mainButton.style.color = 'white';
     mainButton.style.cursor = 'default';
   });
 
-  // Add hover effects to langButton
   langButton.addEventListener('mouseover', function() {
     langButton.style.background = 'darkgreen';
     langButton.style.color = 'white';
@@ -158,7 +165,6 @@
     langButton.style.cursor = 'default';
   });
 
-  // Add hover effects to toggleSwitch
   toggleSwitch.addEventListener('mouseover', function() {
     toggleSwitch.style.background = 'darkgreen';
     toggleSwitch.style.accentColor = 'darkgreen';
@@ -171,7 +177,6 @@
     toggleSwitch.style.cursor = 'default';
   });
 
-  // Add hover effects to preventTabSwitch
   preventTabSwitch.addEventListener('mouseover', function() {
     preventTabSwitch.style.background = 'darkgreen';
     preventTabSwitch.style.accentColor = 'darkgreen';
@@ -217,6 +222,69 @@
     preventTabOpening = false;
   }
   updateWindowOpen();
+
+  var openedWindows = [];
+
+  function startConfirmTasks() {
+    isConfirmingTasks = true;
+    mainButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
+    mainButton.style.background = 'red';
+    confirmTasks();
+  }
+
+  function stopConfirmTasks() {
+    isConfirmingTasks = false;
+    mainButton.textContent = langButton.textContent === 'RU' ? 'Подтвердить' : 'Confirm';
+    mainButton.style.background = 'green';
+  }
+
+  function confirmTasks() {
+    function clickButtons() {
+      var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
+      var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+
+      blueButtons.forEach(button => {
+        button.click();
+        if (!preventTabOpening) {
+          var newWindow = window.open('', '_blank');
+          if (newWindow) {
+            openedWindows.push(newWindow);
+          }
+        }
+      });
+
+      borderedButtons.forEach(button => {
+        button.click();
+      });
+
+      return borderedButtons.length > 0;
+    }
+
+    function continuousClick() {
+      if (isConfirmingTasks) {
+        if (clickButtons()) {
+          requestAnimationFrame(continuousClick);
+        } else {
+          stopConfirmTasks();
+          console.log('Все задания выполнены!');
+        }
+      }
+    }
+
+    continuousClick();
+  }
+
+  function closeOpenedWindows() {
+    openedWindows = openedWindows.filter(window => {
+      if (!window.closed) {
+        window.close();
+        return false;
+      }
+      return true;
+    });
+  }
+
+  setInterval(closeOpenedWindows, 300);
 
   function emulateClick() {
     var button = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
