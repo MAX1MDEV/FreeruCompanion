@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 6.5
+// @version 6.6
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -132,6 +132,33 @@
     }
   });
 
+  // Add hover effects to mainButton
+  mainButton.addEventListener('mouseover', function() {
+    mainButton.style.background = 'darkgreen';
+    mainButton.style.color = 'white';
+    mainButton.style.cursor = 'pointer';
+  });
+
+  mainButton.addEventListener('mouseout', function() {
+    mainButton.style.background = 'green';
+    mainButton.style.color = 'white';
+    mainButton.style.cursor = 'default';
+  });
+
+  // Add hover effects to langButton
+  langButton.addEventListener('mouseover', function() {
+    langButton.style.background = 'darkgreen';
+    langButton.style.color = 'white';
+    langButton.style.cursor = 'pointer';
+  });
+
+  langButton.addEventListener('mouseout', function() {
+    langButton.style.background = 'green';
+    langButton.style.color = 'white';
+    langButton.style.cursor = 'default';
+  });
+
+  // Add hover effects to toggleSwitch
   toggleSwitch.addEventListener('mouseover', function() {
     toggleSwitch.style.background = 'darkgreen';
     toggleSwitch.style.accentColor = 'darkgreen';
@@ -142,6 +169,19 @@
     toggleSwitch.style.background = 'green';
     toggleSwitch.style.accentColor = 'green';
     toggleSwitch.style.cursor = 'default';
+  });
+
+  // Add hover effects to preventTabSwitch
+  preventTabSwitch.addEventListener('mouseover', function() {
+    preventTabSwitch.style.background = 'darkgreen';
+    preventTabSwitch.style.accentColor = 'darkgreen';
+    preventTabSwitch.style.cursor = 'pointer';
+  });
+
+  preventTabSwitch.addEventListener('mouseout', function() {
+    preventTabSwitch.style.background = 'green';
+    preventTabSwitch.style.accentColor = 'green';
+    preventTabSwitch.style.cursor = 'default';
   });
 
   toggleSwitch.addEventListener('change', function() {
@@ -161,18 +201,6 @@
   } else {
     toggleSwitch.checked = false;
   }
-
-  preventTabSwitch.addEventListener('mouseover', function() {
-    preventTabSwitch.style.background = 'darkgreen';
-    preventTabSwitch.style.accentColor = 'darkgreen';
-    preventTabSwitch.style.cursor = 'pointer';
-  });
-
-  preventTabSwitch.addEventListener('mouseout', function() {
-    preventTabSwitch.style.background = 'green';
-    preventTabSwitch.style.accentColor = 'green';
-    preventTabSwitch.style.cursor = 'default';
-  });
 
   preventTabSwitch.addEventListener('change', function() {
     preventTabOpening = preventTabSwitch.checked;
