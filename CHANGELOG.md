@@ -1,4 +1,7 @@
 ## Changelog
+### v7.1 (2024-11-09)
+* The domain of the site has been changed.
+***
 ### v7.0 (2024-11-08)
 * Added a stop script button to stop the script from running without reloading the page to complete tasks.
 ***
@@ -46,6 +49,9 @@
 ***
 
 ## Список изменений
+### v7.1 (2024-11-09)
+* Изменён домен сайта.
+***
 ### v7.0 (2024-11-08)
 * Добавлена кнопка остановки работы скрипта для того, чтобы остановить его без перезагрузки страницы для выполнения заданий.
 ***
