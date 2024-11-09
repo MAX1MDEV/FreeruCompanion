@@ -2,16 +2,16 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 7.0
+// @version 7.1
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
 // @downloadURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
 // @description Auto confirm tasks and control tab opening
 // @description:ru Автоматическое подтверждение заданий и контроль открытия вкладок
-// @match ://freeru.lol/games/cases*
-// @match ://freeru.lol/games/giveaways/games*
-// @icon https://freeru.lol/_nuxt/img/logo.8508f2a.png
+// @match ://freeru.me/games/cases*
+// @match ://freeru.me/games/giveaways/games*
+// @icon https://freeru.me/_nuxt/img/logo.8508f2a.png
 // @grant none
 // ==/UserScript==
 
