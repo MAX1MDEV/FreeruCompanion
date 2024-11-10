@@ -389,7 +389,7 @@ async function handlePromocode() {
       }
     }
     tryInsertPromocode();
-    promocodeInterval = setInterval(tryInsertPromocode, 2000);
+    promocodeInterval = setInterval(tryInsertPromocode, 400);
   } else {
     stopHandlePromocode();
   }
