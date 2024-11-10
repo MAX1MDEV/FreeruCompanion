@@ -277,7 +277,9 @@
     async function clickButtons() {
       var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
       var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-
+      if (blueButtons.length === 0 && borderedButtons.length === 0) {
+        return false;
+      }
       for (let i = 0; i < 3; i++) {
         blueButtons.forEach(button => {
           button.click();
@@ -288,16 +290,12 @@
             }
           }
         });
-
         borderedButtons.forEach(button => {
           button.click();
         });
-
         await new Promise(resolve => setTimeout(resolve, 100));
       }
-
       await new Promise(resolve => setTimeout(resolve, 2000));
-
       for (let i = 0; i < 3; i++) {
         blueButtons.forEach(button => {
           button.click();
@@ -308,17 +306,13 @@
             }
           }
         });
-
         borderedButtons.forEach(button => {
           button.click();
         });
-
         await new Promise(resolve => setTimeout(resolve, 100));
       }
-
       return blueButtons.length > 0 || borderedButtons.length > 0;
     }
-
     async function continuousClick() {
       if (isConfirmingTasks) {
         if (await clickButtons()) {
@@ -329,7 +323,6 @@
         }
       }
     }
-
     continuousClick();
   }
 
