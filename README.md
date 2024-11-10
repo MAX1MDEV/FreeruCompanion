@@ -14,6 +14,8 @@ Video illustration of the script bar:
 
 [Changelog](CHANGELOG.md)
 
+Write problems found while working with the script to [Issues](https://github.com/MAX1MDEV/FreeruCompanion/issues).
+
 **Disclaimer: the usage of this script may violate the Terms of Service of the site it runs on. Use at your own risk.**
 
 ### Supported site
@@ -46,6 +48,8 @@ Automatic updating of the script may require your confirmation.
 ![Панель скрипта](https://github.com/MAX1MDEV/FreeruCompanion/blob/main/videos/script_bar_v.7.5_en_ru.gif)
 
 [Список изменений](CHANGELOG.md)
+
+Проблемы, найденные при работе со скриптом пишите в [Issues](https://github.com/MAX1MDEV/FreeruCompanion/issues).
 
 **Отказ от ответственности: использование данного скрипта может нарушать правила сайта, на котором он используется. Используйте на свой страх и риск.**
 
