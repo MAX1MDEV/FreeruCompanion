@@ -1,6 +1,6 @@
 ## Changelog
 ### v7.5 (2024-11-10)
-* Added button for inserting promo code.
+* Added button for auto inserting promo code.
 * Fixed problem with task confirmation.
 ***
 ### v7.1 (2024-11-09)
@@ -54,7 +54,7 @@
 
 ## Список изменений
 ### v7.5 (2024-11-10)
-* Добавлена кнопка для вставки промокода.
+* Добавлена кнопка для автоматической вставки промокода.
 * Исправлена проблема с подтверждением заданий.
 ***
 ### v7.1 (2024-11-09)
