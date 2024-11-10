@@ -366,7 +366,7 @@ async function handlePromocode() {
       const inputElement = document.querySelector('.text-field__input');
       if (promocodeElement && inputElement) {
         const promocodeText = promocodeElement.textContent.trim();
-        if (promocodeText && !promocodeText.includes('*')) {
+        if (promocodeText && !promocodeText.includes('-')) {
           navigator.clipboard.writeText(promocodeText).then(() => {
             inputElement.focus();
             document.execCommand('insertText', false, promocodeText);
@@ -379,6 +379,7 @@ async function handlePromocode() {
               setTimeout(() => {
                 submitButton.click();
               }, 500);
+              stopHandlePromocode();
             } else {
               console.log('Кнопка отправки промокода не найдена');
             }
