@@ -363,17 +363,16 @@ async function handlePromocode() {
     }
     function tryInsertPromocode() {
       const promocodeElement = document.querySelector('.promocode-box__promocode');
-      const inputElement = document.querySelector('.text-field__input');
+      const inputElement = Array.from(document.querySelectorAll('.text-field__input'))
+                                 .find(el => el.getAttribute('placeholder') === '');
       if (promocodeElement && inputElement) {
         const promocodeText = promocodeElement.textContent.trim();
         if (promocodeText && !promocodeText.includes('*')) {
           navigator.clipboard.writeText(promocodeText).then(() => {
             inputElement.focus();
             document.execCommand('insertText', false, promocodeText);
-
             const inputEvent = new Event('input', { bubbles: true, cancelable: true });
             inputElement.dispatchEvent(inputEvent);
-
             const submitButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
             if (submitButton) {
               setTimeout(() => {
@@ -393,7 +392,7 @@ async function handlePromocode() {
           console.log('Промокод не найден в элементе promocode-box__promocode');
         }
       } else {
-        console.log('Не удалось найти элемент промокода или поле ввода');
+        console.log('Не удалось найти элемент промокода или поле ввода с пустым placeholder');
       }
     }
     tryInsertPromocode();
