@@ -366,7 +366,7 @@ async function handlePromocode() {
       const inputElement = document.querySelector('.text-field__input');
       if (promocodeElement && inputElement) {
         const promocodeText = promocodeElement.textContent.trim();
-        if (promocodeText && !promocodeText.includes('-')) {
+        if (promocodeText && !promocodeText.includes('*')) {
           navigator.clipboard.writeText(promocodeText).then(() => {
             inputElement.focus();
             document.execCommand('insertText', false, promocodeText);
