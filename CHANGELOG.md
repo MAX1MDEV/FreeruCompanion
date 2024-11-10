@@ -1,4 +1,8 @@
 ## Changelog
+### v7.5 (2024-11-10)
+* Added button for inserting promo code.
+* Fixed problem with task confirmation.
+***
 ### v7.1 (2024-11-09)
 * The domain of the site has been changed.
 ***
@@ -49,6 +53,10 @@
 ***
 
 ## Список изменений
+### v7.5 (2024-11-10)
+* Добавлена кнопка для вставки промокода.
+* Исправлена проблема с подтверждением заданий.
+***
 ### v7.1 (2024-11-09)
 * Изменён домен сайта.
 ***
