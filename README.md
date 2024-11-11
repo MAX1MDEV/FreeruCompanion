@@ -30,12 +30,12 @@ Write problems found while working with the script to [Issues](https://github.co
 2. Go [here](/../../raw/main/FreeruCompanion.user.js).
 3. Confirm installation of the script.
 
+Automatic updating of the script may require your confirmation.
+
 ### Extension
 1. Download zip Release in [Releases](https://github.com/MAX1MDEV/FreeruCompanion/releases).
 2. Enable developer mode in browser extensions.
 3. Install the zip package by moving it to the browser window.
-
-Automatic updating of the script may require your confirmation.
 
 ***
 
@@ -70,9 +70,9 @@ Automatic updating of the script may require your confirmation.
 2. Перейти [сюда](/../../raw/main/FreeruCompanion.user.js).
 3. Подтвердить установку скрипта.
 
+При автоматическом обновлении скрипта может потребоваться ваше подтверждение.
+
 ### Расширение
 1. Скачайте последний zip релиз в [Releases](https://github.com/MAX1MDEV/FreeruCompanion/releases).
 2. Включите режим разработчика в расширениях браузера.
 3. Установите zip-пакет, переместив его в окно браузера.
-
-При автоматическом обновлении скрипта может потребоваться ваше подтверждение.
