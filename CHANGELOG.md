@@ -1,4 +1,7 @@
 ## Changelog
+### v8.0 (2024-11-30)
+* Changed `confirmTasks()`: now, if the checkbox on autosell is checked, jobs are automatically re-confirmed after a case is opened.
+***
 ### v7.5 (2024-11-10)
 * Added button for auto inserting promo code.
 * Fixed problem with task confirmation.
@@ -53,6 +56,9 @@
 ***
 
 ## Список изменений
+### v8.0 (2024-11-30)
+* Изменена функция `confirmTasks()`: теперь, если установлен чекбокс на автопродаже, после открытия кейса автоматически выполняется повторное подтверждение заданий.
+***
 ### v7.5 (2024-11-10)
 * Добавлена кнопка для автоматической вставки промокода.
 * Исправлена проблема с подтверждением заданий.
