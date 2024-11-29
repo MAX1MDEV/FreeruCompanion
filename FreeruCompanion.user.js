@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 7.5
+// @version 8.0
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -23,6 +23,8 @@
   var isConfirmingTasks = false;
   var isHandlingPromocode = false;
   let promocodeInterval;
+  let noButtonsCount = 0;
+  let passCount = 0;
 
   function updateWindowOpen() {
     window.open = preventTabOpening ? function() { return null; } : originalWindowOpen;
@@ -261,27 +263,30 @@
   var openedWindows = [];
 
   function startConfirmTasks() {
-    isConfirmingTasks = true;
-    mainButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
-    mainButton.style.background = 'red';
-    confirmTasks();
-  }
+  isConfirmingTasks = true;
+  passCount = 0;
+  mainButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
+  mainButton.style.background = 'red';
+  confirmTasks();
+}
 
-  function stopConfirmTasks() {
-    isConfirmingTasks = false;
-    mainButton.textContent = langButton.textContent === 'RU' ? 'Подтвердить' : 'Confirm';
-    mainButton.style.background = 'green';
-  }
+function stopConfirmTasks() {
+  isConfirmingTasks = false;
+  passCount = 0;
+  mainButton.textContent = langButton.textContent === 'RU' ? 'Подтвердить' : 'Confirm';
+  mainButton.style.background = 'green';
+}
 
   async function confirmTasks() {
     async function clickButtons() {
       var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
       var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
+      var activateButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
       if (blueButtons.length === 0 && borderedButtons.length === 0) {
-        return false;
+        return activateButton ? 'activate' : false;
       }
-      for (let i = 0; i < 3; i++) {
-        blueButtons.forEach(button => {
+      for (let i = 0; i < 2; i++) {
+        for (let button of blueButtons) {
           button.click();
           if (!preventTabOpening) {
             var newWindow = window.open('', '_blank');
@@ -289,37 +294,33 @@
               openedWindows.push(newWindow);
             }
           }
-        });
-        borderedButtons.forEach(button => {
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        for (let button of borderedButtons) {
           button.click();
-        });
-        await new Promise(resolve => setTimeout(resolve, 100));
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      for (let i = 0; i < 3; i++) {
-        blueButtons.forEach(button => {
-          button.click();
-          if (!preventTabOpening) {
-            var newWindow = window.open('', '_blank');
-            if (newWindow) {
-              openedWindows.push(newWindow);
-            }
-          }
-        });
-        borderedButtons.forEach(button => {
-          button.click();
-        });
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-      return blueButtons.length > 0 || borderedButtons.length > 0;
+      return true;
     }
     async function continuousClick() {
       if (isConfirmingTasks) {
-        if (await clickButtons()) {
-          setTimeout(continuousClick, 100);
-        } else {
+        const result = await clickButtons();
+        if (result === true) {
+          passCount = 0;
+          setTimeout(continuousClick, 1000);
+        } else if (result === 'activate' || !toggleSwitch.checked) {
           stopConfirmTasks();
-          console.log('Все задания выполнены!');
+          console.log('Все задания выполнены или требуется активация!');
+        } else {
+          passCount++;
+          if (passCount >= 2) {
+            stopConfirmTasks();
+            console.log('Все задания выполнены после двух проходов!');
+          } else {
+            setTimeout(continuousClick, 1000);
+          }
         }
       }
     }
@@ -415,11 +416,15 @@ async function handlePromocode() {
   }
 
   function autoSell() {
-    var button = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
-    if (button) {
-      button.click();
+  var button = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
+  if (button) {
+    button.click();
+    passCount = 0;
+    if (!isConfirmingTasks && toggleSwitch.checked) {
+      startConfirmTasks();
     }
   }
+}
 
   function giveawayClick() {
     var button = document.querySelector('.get-reward-button.btn.btn-blue.btn-lg');
