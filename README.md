@@ -21,7 +21,7 @@ Write problems found while working with the script to [Issues](https://github.co
 ### Supported site
 | Site               | Features
 | :----------------- | :-----------------
-| [freeru.lol](https://freeru.lol/)         | Automatic tasks confirmation, automatic sale, automatic opening of cases, automatic insertion and activation of promo code, automatic receipt of key on the giveaway page
+| [freeru.me](https://freeru.me/)         | Automatic tasks confirmation, automatic sale, automatic opening of cases, automatic insertion and activation of promo code, automatic receipt of key on the giveaway page
 
 ### Installation
 1. Install one of the browser extensions to run user scripts.  
@@ -61,7 +61,7 @@ Automatic updating of the script may require your confirmation.
 ### Поддерживаемые сайты
 | Сайт               | Функции
 | :----------------- | :-----------------
-| [freeru.lol](https://freeru.lol/)         | Автоматическое подтверждение заданий, автоматическая продажа, автоматическое открытие кейсов, автоматическая вставка и активация промокода, автоматическое получение ключа на странице раздачи
+| [freeru.me](https://freeru.me/)         | Автоматическое подтверждение заданий, автоматическая продажа, автоматическое открытие кейсов, автоматическая вставка и активация промокода, автоматическое получение ключа на странице раздачи
 
 ### Установка
 1. Установить одно из браузерных расширений для выполнения пользовательских скриптов.  
