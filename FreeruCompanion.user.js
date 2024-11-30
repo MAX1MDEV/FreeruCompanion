@@ -15,6 +15,9 @@
 // @grant none
 // ==/UserScript==
 
+// Hotfix (2024-11-30): Reduced the delay between clicks in `confirmTasks()` for faster task confirmation.
+// Хотфикс (30.11.2024): Уменьшена задержка между кликами в функции `confirmTasks()` для ускорения обработки заданий.
+
 (function() {
   'use strict';
 
@@ -263,19 +266,19 @@
   var openedWindows = [];
 
   function startConfirmTasks() {
-  isConfirmingTasks = true;
-  passCount = 0;
-  mainButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
-  mainButton.style.background = 'red';
-  confirmTasks();
-}
+    isConfirmingTasks = true;
+    passCount = 0;
+    mainButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
+    mainButton.style.background = 'red';
+    confirmTasks();
+  }
 
-function stopConfirmTasks() {
-  isConfirmingTasks = false;
-  passCount = 0;
-  mainButton.textContent = langButton.textContent === 'RU' ? 'Подтвердить' : 'Confirm';
-  mainButton.style.background = 'green';
-}
+  function stopConfirmTasks() {
+    isConfirmingTasks = false;
+    passCount = 0;
+    mainButton.textContent = langButton.textContent === 'RU' ? 'Подтвердить' : 'Confirm';
+    mainButton.style.background = 'green';
+  }
 
   async function confirmTasks() {
     async function clickButtons() {
@@ -285,22 +288,17 @@ function stopConfirmTasks() {
       if (blueButtons.length === 0 && borderedButtons.length === 0 && !activatePromoCodeButton) {
         return false;
       }
-      for (let i = 0; i < 2; i++) {
-        for (let button of blueButtons) {
-          button.click();
-          if (!preventTabOpening) {
-            var newWindow = window.open('', '_blank');
-            if (newWindow) {
-              openedWindows.push(newWindow);
-            }
+      for (let button of blueButtons) {
+        button.click();
+        if (!preventTabOpening) {
+          var newWindow = window.open('', '_blank');
+          if (newWindow) {
+            openedWindows.push(newWindow);
           }
-          await new Promise(resolve => setTimeout(resolve, 500));
         }
-        for (let button of borderedButtons) {
-          button.click();
-          await new Promise(resolve => setTimeout(resolve, 500));
-        }
-        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+      for (let button of borderedButtons) {
+        button.click();
       }
       return true;
     }
@@ -310,7 +308,7 @@ function stopConfirmTasks() {
         var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
         if (result === true || activatePromoCodeButton) {
           passCount = 0;
-          setTimeout(continuousClick, 1000);
+          setTimeout(continuousClick, 100);
         } else if (!toggleSwitch.checked) {
           stopConfirmTasks();
         } else {
@@ -318,7 +316,7 @@ function stopConfirmTasks() {
           if (passCount >= 2 && !activatePromoCodeButton) {
             stopConfirmTasks();
           } else {
-            setTimeout(continuousClick, 1000);
+            setTimeout(continuousClick, 100);
           }
         }
       }
@@ -327,73 +325,73 @@ function stopConfirmTasks() {
   }
 
   function startHandlePromocode() {
-  isHandlingPromocode = true;
-  promocodeButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
-  promocodeButton.style.background = 'red';
-  handlePromocode();
-}
-
-function stopHandlePromocode() {
-  clearInterval(promocodeInterval);
-  isHandlingPromocode = false;
-  promocodeButton.textContent = langButton.textContent === 'RU' ? 'Промокод' : 'Promocode';
-  promocodeButton.style.background = 'green';
-}
-
-async function handlePromocode() {
-  try {
-    await navigator.clipboard.readText();
-  } catch (err) {
-    alert('Для работы функции промокода необходим доступ к буферу обмена. Пожалуйста, предоставьте разрешение при появлении запроса.');
-    stopHandlePromocode();
-    return;
+    isHandlingPromocode = true;
+    promocodeButton.textContent = langButton.textContent === 'RU' ? 'Остановить' : 'Stop';
+    promocodeButton.style.background = 'red';
+    handlePromocode();
   }
-  const labelElement = document.querySelector('.text-field__label');
-  if (labelElement) {
-    labelElement.click();
-    if (promocodeInterval) {
-      clearInterval(promocodeInterval);
+
+  function stopHandlePromocode() {
+    clearInterval(promocodeInterval);
+    isHandlingPromocode = false;
+    promocodeButton.textContent = langButton.textContent === 'RU' ? 'Промокод' : 'Promocode';
+    promocodeButton.style.background = 'green';
+  }
+
+  async function handlePromocode() {
+    try {
+      await navigator.clipboard.readText();
+    } catch (err) {
+      alert('Для работы функции промокода необходим доступ к буферу обмена. Пожалуйста, предоставьте разрешение при появлении запроса.');
+      stopHandlePromocode();
+      return;
     }
-    function tryInsertPromocode() {
-      const promocodeElement = document.querySelector('.promocode-box__promocode');
-      const inputElement = Array.from(document.querySelectorAll('.text-field__input'))
-                                 .find(el => el.getAttribute('placeholder') === '');
-      if (promocodeElement && inputElement) {
-        const promocodeText = promocodeElement.textContent.trim();
-        if (promocodeText && !promocodeText.includes('*')) {
-          navigator.clipboard.writeText(promocodeText).then(() => {
-            inputElement.focus();
-            document.execCommand('insertText', false, promocodeText);
-            const inputEvent = new Event('input', { bubbles: true, cancelable: true });
-            inputElement.dispatchEvent(inputEvent);
-            const submitButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
-            if (submitButton) {
-              setTimeout(() => {
-                submitButton.click();
-              }, 500);
-              stopHandlePromocode();
-            } else {
-              console.log('Кнопка отправки промокода не найдена');
-            }
-          }).catch(err => {
-            console.error('Не удалось скопировать промокод в буфер обмена:', err);
-            stopHandlePromocode();
-          });
-        } else if (promocodeText.includes('*')) {
-          console.log('Промокод все еще содержит "*" и не может быть вставлен');
-        } else {
-          console.log('Промокод не найден в элементе promocode-box__promocode');
-        }
-      } else {
-        console.log('Не удалось найти элемент промокода или поле ввода с пустым placeholder');
+    const labelElement = document.querySelector('.text-field__label');
+    if (labelElement) {
+      labelElement.click();
+      if (promocodeInterval) {
+        clearInterval(promocodeInterval);
       }
+      function tryInsertPromocode() {
+        const promocodeElement = document.querySelector('.promocode-box__promocode');
+        const inputElement = Array.from(document.querySelectorAll('.text-field__input'))
+                                   .find(el => el.getAttribute('placeholder') === '');
+        if (promocodeElement && inputElement) {
+          const promocodeText = promocodeElement.textContent.trim();
+          if (promocodeText && !promocodeText.includes('*')) {
+            navigator.clipboard.writeText(promocodeText).then(() => {
+              inputElement.focus();
+              document.execCommand('insertText', false, promocodeText);
+              const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+              inputElement.dispatchEvent(inputEvent);
+              const submitButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
+              if (submitButton) {
+                setTimeout(() => {
+                  submitButton.click();
+                }, 500);
+                stopHandlePromocode();
+              } else {
+                console.log('Кнопка отправки промокода не найдена');
+              }
+            }).catch(err => {
+              console.error('Не удалось скопировать промокод в буфер обмена:', err);
+              stopHandlePromocode();
+            });
+          } else if (promocodeText.includes('*')) {
+            console.log('Промокод все еще содержит "*" и не может быть вставлен');
+          } else {
+            console.log('Промокод не найден в элементе promocode-box__promocode');
+          }
+        } else {
+          console.log('Не удалось найти элемент промокода или поле ввода с пустым placeholder');
+        }
+      }
+      tryInsertPromocode();
+      promocodeInterval = setInterval(tryInsertPromocode, 400);
+    } else {
+      stopHandlePromocode();
     }
-    tryInsertPromocode();
-    promocodeInterval = setInterval(tryInsertPromocode, 400);
-  } else {
-    stopHandlePromocode();
   }
-}
 
   function closeOpenedWindows() {
     openedWindows = openedWindows.filter(window => {
@@ -415,15 +413,15 @@ async function handlePromocode() {
   }
 
   function autoSell() {
-  var button = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
-  if (button) {
-    button.click();
-    passCount = 0;
-    if (!isConfirmingTasks && toggleSwitch.checked) {
-      startConfirmTasks();
+    var button = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
+    if (button) {
+      button.click();
+      passCount = 0;
+      if (!isConfirmingTasks && toggleSwitch.checked) {
+        startConfirmTasks();
+      }
     }
   }
-}
 
   function giveawayClick() {
     var button = document.querySelector('.get-reward-button.btn.btn-blue.btn-lg');
