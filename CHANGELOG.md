@@ -1,4 +1,7 @@
 ## Changelog
+### v8.2 (2024-11-30)  
+* **Updated `confirmTasks()`**: added logic to infinitely confirm tasks on pages with a button with class `.promo-code-form__button.btn.btn-blue.btn-lg ` , without resetting its state.
+***
 ### v8.0 (2024-11-30)
 * Changed `confirmTasks()`: now, if the checkbox on autosell is checked, jobs are automatically re-confirmed after a case is opened.
 ***
@@ -56,6 +59,9 @@
 ***
 
 ## Список изменений
+### v8.2 (2024-11-30)  
+* **Обновлена функция `confirmTasks()`**: добавлена логика, позволяющая бесконечно подтверждать задания на страницах, где присутствует кнопка с классом `.promo-code-form__button.btn.btn-blue.btn-lg`, без сброса её состояния.
+***
 ### v8.0 (2024-11-30)
 * Изменена функция `confirmTasks()`: теперь, если установлен чекбокс на автопродаже, после открытия кейса автоматически выполняется повторное подтверждение заданий.
 ***
