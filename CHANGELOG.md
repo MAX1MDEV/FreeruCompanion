@@ -1,6 +1,6 @@
 ## Changelog
 ### v8.5 (2024-11-30)  
-* Implemented `consolecheck()` function that provides automatic transition to the main page of cases when the selected case is no longer available for opening.
+* Implemented `textOnPageCheck()` function that provides automatic transition to the main page of cases when the selected case is no longer available for opening.
 ***
 ### v8.2 (Hotfix, 2024-11-30)  
 * Reduced the delay between clicks in `confirmTasks()`.
@@ -66,7 +66,7 @@
 
 ## Список изменений
 ### v8.5 (2024-11-30)  
-* Реализована функция `consolecheck()`, обеспечивающая автоматический переход на главную страницу кейсов в случаях, когда выбранный кейс более недоступен для открытия.
+* Реализована функция `textOnPageCheck()`, обеспечивающая автоматический переход на главную страницу кейсов в случаях, когда выбранный кейс более недоступен для открытия.
 ***
 ### v8.2 (Hotfix, 2024-11-30)  
 * Уменьшена задержка между кликами в функции `confirmTasks()`.
