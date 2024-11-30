@@ -1,4 +1,7 @@
 ## Changelog
+### v8.2 (Hotfix, 2024-11-30)  
+* Reduced the delay between clicks in `confirmTasks()`.
+***
 ### v8.2 (2024-11-30)  
 * **Updated `confirmTasks()`**: added logic to infinitely confirm tasks on pages with a button with class `.promo-code-form__button.btn.btn-blue.btn-lg ` , without resetting its state.
 ***
@@ -59,6 +62,9 @@
 ***
 
 ## Список изменений
+### v8.2 (Hotfix, 2024-11-30)  
+* Уменьшена задержка между кликами в функции `confirmTasks()`.
+***
 ### v8.2 (2024-11-30)  
 * **Обновлена функция `confirmTasks()`**: добавлена логика, позволяющая бесконечно подтверждать задания на страницах, где присутствует кнопка с классом `.promo-code-form__button.btn.btn-blue.btn-lg`, без сброса её состояния.
 ***
