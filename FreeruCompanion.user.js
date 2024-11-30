@@ -432,34 +432,24 @@
     }
   });
 
-  function consoleCheck() {
-    const originalFetch = window.fetch;
-    window.fetch = async function(...args) {
-      const response = await originalFetch.apply(this, args);
-      if (response.status === 422) {
+  function textOnPageCheck() {
+    const observer = new MutationObserver(() => {
+      if (document.body.innerText.includes("Повторно")) {
         const freeCasesLink = document.querySelector('li.breadcrumb__item a[href="/games/cases"]');
         if (freeCasesLink) {
           freeCasesLink.click();
         }
       }
-      return response;
-    };
-    const originalXHROpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(...args) {
-      this.addEventListener('load', function() {
-        if (this.status === 422) {
-          const freeCasesLink = document.querySelector('li.breadcrumb__item a[href="/games/cases"]');
-          if (freeCasesLink) {
-            freeCasesLink.click();
-          }
-        }
-      });
-      return originalXHROpen.apply(this, args);
-    };
+    });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
   }
 
   setInterval(giveawayClick, 300);
   setInterval(emulateClick, 300);
-  consoleCheck();
+  textOnPageCheck();
 
 })();
