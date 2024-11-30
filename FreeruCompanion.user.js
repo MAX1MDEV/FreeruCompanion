@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 8.0
+// @version 8.2
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -281,9 +281,9 @@ function stopConfirmTasks() {
     async function clickButtons() {
       var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
       var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-      var activateButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
-      if (blueButtons.length === 0 && borderedButtons.length === 0) {
-        return activateButton ? 'activate' : false;
+      var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
+      if (blueButtons.length === 0 && borderedButtons.length === 0 && !activatePromoCodeButton) {
+        return false;
       }
       for (let i = 0; i < 2; i++) {
         for (let button of blueButtons) {
@@ -307,17 +307,16 @@ function stopConfirmTasks() {
     async function continuousClick() {
       if (isConfirmingTasks) {
         const result = await clickButtons();
-        if (result === true) {
+        var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
+        if (result === true || activatePromoCodeButton) {
           passCount = 0;
           setTimeout(continuousClick, 1000);
-        } else if (result === 'activate' || !toggleSwitch.checked) {
+        } else if (!toggleSwitch.checked) {
           stopConfirmTasks();
-          console.log('Все задания выполнены или требуется активация!');
         } else {
           passCount++;
-          if (passCount >= 2) {
+          if (passCount >= 2 && !activatePromoCodeButton) {
             stopConfirmTasks();
-            console.log('Все задания выполнены после двух проходов!');
           } else {
             setTimeout(continuousClick, 1000);
           }
