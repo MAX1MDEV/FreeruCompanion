@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 8.2
+// @version 8.5
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -14,9 +14,6 @@
 // @icon https://freeru.me/_nuxt/img/logo.8508f2a.png
 // @grant none
 // ==/UserScript==
-
-// Hotfix (2024-11-30): Reduced the delay between clicks in `confirmTasks()` for faster task confirmation.
-// Хотфикс (30.11.2024): Уменьшена задержка между кликами в функции `confirmTasks()` для ускорения обработки заданий.
 
 (function() {
   'use strict';
@@ -284,8 +281,7 @@
     async function clickButtons() {
       var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
       var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
-      var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
-      if (blueButtons.length === 0 && borderedButtons.length === 0 && !activatePromoCodeButton) {
+      if (blueButtons.length === 0 && borderedButtons.length === 0) {
         return false;
       }
       for (let button of blueButtons) {
@@ -302,18 +298,17 @@
       }
       return true;
     }
+
     async function continuousClick() {
       if (isConfirmingTasks) {
         const result = await clickButtons();
         var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
-        if (result === true || activatePromoCodeButton) {
+        if (result === true) {
           passCount = 0;
           setTimeout(continuousClick, 100);
-        } else if (!toggleSwitch.checked) {
-          stopConfirmTasks();
         } else {
           passCount++;
-          if (passCount >= 2 && !activatePromoCodeButton) {
+          if (passCount >= 2) {
             stopConfirmTasks();
           } else {
             setTimeout(continuousClick, 100);
@@ -416,7 +411,6 @@
     var button = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
     if (button) {
       button.click();
-      passCount = 0;
       if (!isConfirmingTasks && toggleSwitch.checked) {
         startConfirmTasks();
       }
@@ -438,7 +432,34 @@
     }
   });
 
+  function consoleCheck() {
+    const originalFetch = window.fetch;
+    window.fetch = async function(...args) {
+      const response = await originalFetch.apply(this, args);
+      if (response.status === 422) {
+        const freeCasesLink = document.querySelector('li.breadcrumb__item a[href="/games/cases"]');
+        if (freeCasesLink) {
+          freeCasesLink.click();
+        }
+      }
+      return response;
+    };
+    const originalXHROpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(...args) {
+      this.addEventListener('load', function() {
+        if (this.status === 422) {
+          const freeCasesLink = document.querySelector('li.breadcrumb__item a[href="/games/cases"]');
+          if (freeCasesLink) {
+            freeCasesLink.click();
+          }
+        }
+      });
+      return originalXHROpen.apply(this, args);
+    };
+  }
+
   setInterval(giveawayClick, 300);
   setInterval(emulateClick, 300);
+  consoleCheck();
 
 })();
