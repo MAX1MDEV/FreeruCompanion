@@ -305,13 +305,13 @@
         var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
         if (result === true) {
           passCount = 0;
-          setTimeout(continuousClick, 100);
+          setTimeout(continuousClick, 2000);
         } else {
           passCount++;
           if (passCount >= 2) {
             stopConfirmTasks();
           } else {
-            setTimeout(continuousClick, 100);
+            setTimeout(continuousClick, 2000);
           }
         }
       }
