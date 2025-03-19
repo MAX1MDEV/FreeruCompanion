@@ -18,6 +18,19 @@ Write problems found while working with the script to [Issues](https://github.co
 
 **Disclaimer: the usage of this script may violate the Terms of Service of the site it runs on. Use at your own risk.**
 
+### 📌 To-Do List: Freeru Companion
+#### 🔧 Main Tasks
+- Full implementation and refinement of site automation features
+  - Improving the work of current automated processes
+  - Adding new functions for maximum automation
+- Redesigning the task completion system
+  - Updating task execution logic
+  - Optimizing and improving the interface
+
+#### 🛠 Fixes and Optimization
+- Micro-fix for link transition issues
+- Bug fixes related to incorrect redirects
+
 ### Supported site
 | Site               | Features
 | :----------------- | :-----------------
@@ -58,6 +71,19 @@ Automatic updating of the script may require your confirmation.
 
 **Отказ от ответственности: использование данного скрипта может нарушать правила сайта, на котором он используется. Используйте на свой страх и риск.**
 
+### 📌 To-Do List: Freeru Companion
+#### 🔧 Основные задачи
+- Добавление и полная доработка функции автоматизации действий на сайте
+  - Улучшение работы текущих автоматизированных процессов
+  - Добавление новых функций для максимальной автоматизации
+- Переработка системы выполнения заданий
+  - Обновление логики выполнения заданий
+  - Оптимизация и улучшение интерфейса
+
+#### 🛠 Исправления и оптимизация
+- Микро-фикс проблемы с переходом по ссылкам
+- Исправление багов, связанных с некорректными редиректами
+
 ### Поддерживаемые сайты
 | Сайт               | Функции
 | :----------------- | :-----------------
@@ -75,4 +101,7 @@ Automatic updating of the script may require your confirmation.
 ### Расширение
 1. Скачайте последний zip релиз в [Releases](https://github.com/MAX1MDEV/FreeruCompanion/releases).
 2. Включите режим разработчика в расширениях браузера.
+
 3. Установите zip-пакет, переместив его в окно браузера.
+
+
