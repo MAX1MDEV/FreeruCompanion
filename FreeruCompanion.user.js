@@ -2,7 +2,7 @@
 // @name Freeru Companion
 // @author MaximDev
 // @namespace MAX1MDEV
-// @version 8.5
+// @version 9.0
 // @homepage https://github.com/MAX1MDEV/FreeruCompanion
 // @supportURL https://github.com/MAX1MDEV/FreeruCompanion/issues
 // @updateURL https://raw.githubusercontent.com/MAX1MDEV/FreeruCompanion/main/FreeruCompanion.user.js
@@ -25,12 +25,83 @@
   let promocodeInterval;
   let noButtonsCount = 0;
   let passCount = 0;
+  var isAutoMode = false;
+  var autoInterval;
+  var casesToClick = [
+  'a[href^="/games/cases/diamondcase"]',
+  'a[href^="/games/cases/richcase"]',
+  'a[href^="/games/cases/animecase"]',
+  'a[href^="/games/cases/amonguscase"]',
+  'a[href^="/games/cases/globalcase"]',
+  'a[href^="/games/cases/mysterycase"]',
+  'a[href^="/games/cases/cs2case"]'
+  ];
+  var currentCaseIndex = 0;
 
-  function updateWindowOpen() {
-    window.open = preventTabOpening ? function() { return null; } : originalWindowOpen;
+  function toggleLinkBlocking(enable) {
+      document.removeEventListener('click', blockLinks, true);
+      if (enable) {
+          document.addEventListener('click', blockLinks, true);
+      } else {
+          restoreLinks();
+      }
   }
 
-  updateWindowOpen();
+  function blockLinks(event) {
+      let el = event.target.closest('a');
+      if (preventTabOpening && el && el.target === '_blank') {
+          event.preventDefault();
+          let taskUrl = el.href;
+
+          let iframe = document.createElement('iframe');
+          iframe.src = taskUrl;
+          iframe.style.width = '1px';
+          iframe.style.height = '1px';
+          iframe.style.position = 'absolute';
+          iframe.style.left = '-9999px';
+
+          document.body.appendChild(iframe);
+
+          setTimeout(() => {
+              iframe.remove();
+              console.log('iframe удален, сайт "думает", что страница была открыта');
+          }, 5000);
+      }
+  }
+
+  function restoreLinks() {
+      document.querySelectorAll('a[href="javascript:void(0)"]').forEach(el => {
+          if (el.dataset.originalHref) {
+              el.href = el.dataset.originalHref;
+              if (el.dataset.originalTarget) {
+                  el.setAttribute('target', el.dataset.originalTarget);
+              }
+              delete el.dataset.originalHref;
+              delete el.dataset.originalTarget;
+          }
+      });
+  }
+
+  function observePageChanges() {
+    const observer = new MutationObserver((mutations) => {
+      for (let mutation of mutations) {
+        if (mutation.type === 'childList') {
+          if (document.querySelector('.case-cards') || document.querySelector('.case-items-tape__open-button')) {
+            observer.disconnect();
+            if (isAutoMode) {
+              setTimeout(clickNextCase, 1000);
+            }
+            break;
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
 
   var container = document.createElement('div');
   container.style.position = 'fixed';
@@ -48,6 +119,17 @@
   container.style.zIndex = '99999999';
   document.body.appendChild(container);
 
+
+  var autoButton = document.createElement('button');
+  autoButton.textContent = 'Авто';
+  autoButton.style.background = 'green';
+  autoButton.style.color = 'white';
+  autoButton.style.border = 'none';
+  autoButton.style.borderRadius = '5px';
+  autoButton.style.userSelect = 'none';
+  autoButton.style.padding = '10px 20px';
+  container.appendChild(autoButton);
+
   var mainButton = document.createElement('button');
   mainButton.textContent = 'Подтвердить';
   mainButton.style.background = 'green';
@@ -56,6 +138,7 @@
   mainButton.style.borderRadius = '5px';
   mainButton.style.userSelect = 'none';
   mainButton.style.padding = '10px 20px';
+  mainButton.style.marginTop = '5px';
   container.appendChild(mainButton);
 
   var promocodeButton = document.createElement('button');
@@ -137,16 +220,26 @@
   langButton.addEventListener('click', function() {
     if (langButton.textContent === 'EN') {
       langButton.textContent = 'RU';
+      autoButton.textContent = isAutoMode ? 'Остановить' : 'Авто';
       mainButton.textContent = isConfirmingTasks ? 'Остановить' : 'Подтвердить';
       promocodeButton.textContent = isHandlingPromocode ? 'Остановить' : 'Промокод';
       toggleLabel.textContent = 'Авто-продажа';
       preventTabLabel.textContent = 'Блокировать открытие вкладок';
     } else {
       langButton.textContent = 'EN';
+      autoButton.textContent = isAutoMode ? 'Stop' : 'Auto';
       mainButton.textContent = isConfirmingTasks ? 'Stop' : 'Confirm';
       promocodeButton.textContent = isHandlingPromocode ? 'Stop' : 'Promocode';
       toggleLabel.textContent = 'Auto-sell';
       preventTabLabel.textContent = 'Block tabs from opening';
+    }
+  });
+
+  autoButton.addEventListener('click', function() {
+    if (isAutoMode) {
+      stopAutoMode();
+    } else {
+      startAutoMode();
     }
   });
 
@@ -166,6 +259,15 @@
     }
   });
 
+  autoButton.addEventListener('mouseover', function() {
+    autoButton.style.background = isAutoMode ? '#FF8C00' : 'darkgreen';
+    autoButton.style.cursor = 'pointer';
+  });
+
+  autoButton.addEventListener('mouseout', function() {
+    autoButton.style.background = isAutoMode ? 'red' : 'green';
+    autoButton.style.cursor = 'default';
+  });
   mainButton.addEventListener('mouseover', function() {
     mainButton.style.background = isConfirmingTasks ? '#FF8C00' : 'darkgreen';
     mainButton.style.color = 'white';
@@ -244,24 +346,57 @@
     toggleSwitch.checked = false;
   }
 
-  preventTabSwitch.addEventListener('change', function() {
-    preventTabOpening = preventTabSwitch.checked;
-    localStorage.setItem('preventTabOpening', preventTabOpening.toString());
-    updateWindowOpen();
-  });
+   var storedPreventTabOpening = localStorage.getItem('preventTabOpening') === 'true';
+   preventTabOpening = storedPreventTabOpening;
+   preventTabSwitch.checked = storedPreventTabOpening;
 
-  var storedPreventTabOpening = localStorage.getItem('preventTabOpening');
-  if (storedPreventTabOpening === 'true') {
-    preventTabSwitch.checked = true;
-    preventTabOpening = true;
-  } else {
-    preventTabSwitch.checked = false;
-    preventTabOpening = false;
+   preventTabSwitch.addEventListener('change', function() {
+       preventTabOpening = preventTabSwitch.checked;
+       localStorage.setItem('preventTabOpening', preventTabOpening.toString());
+       toggleLinkBlocking(preventTabOpening);
+   });
+
+   toggleLinkBlocking(preventTabOpening);
+
+   var openedWindows = [];
+
+  function startAutoMode() {
+    isAutoMode = true;
+    autoButton.textContent = 'Остановить';
+    autoButton.style.background = 'red';
+    currentCaseIndex = 0;
+    clickNextCase();
+    observePageChanges();
   }
-  updateWindowOpen();
 
-  var openedWindows = [];
+  function stopAutoMode() {
+    isAutoMode = false;
+    autoButton.textContent = 'Авто';
+    autoButton.style.background = 'green';
+    clearTimeout(autoInterval);
+  }
 
+  function clickNextCase() {
+  if (!isAutoMode) return;
+
+  function findAndClickCase() {
+      for (let i = 0; i < casesToClick.length; i++) {
+        const caseLink = document.querySelector(casesToClick[i]);
+        if (caseLink) {
+          caseLink.click();
+          currentCaseIndex = (i + 1) % casesToClick.length;
+          setTimeout(handleCaseOpening, 2000);
+          return true;
+        }
+      }
+      return false;
+    }
+    if (!findAndClickCase()) {
+      console.log("No more cases found, returning to main page");
+      clickFreeCasesLink();
+      currentCaseIndex = 0;
+    }
+  }
   function startConfirmTasks() {
     isConfirmingTasks = true;
     passCount = 0;
@@ -278,6 +413,10 @@
   }
 
   async function confirmTasks() {
+    let clickCount = 0;
+    const maxClicks = 5;
+    const pauseDuration = 2000;
+
     async function clickButtons() {
       var blueButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-blue');
       var borderedButtons = document.querySelectorAll('.task-card__button.task-card__button_stretch.btn.btn-bordered');
@@ -302,16 +441,19 @@
     async function continuousClick() {
       if (isConfirmingTasks) {
         const result = await clickButtons();
-        var activatePromoCodeButton = document.querySelector('.promo-code-form__button.btn.btn-blue.btn-lg');
         if (result === true) {
-          passCount = 0;
-          setTimeout(continuousClick, 2000);
+          clickCount++;
+          if (clickCount >= maxClicks) {
+            await new Promise(resolve => setTimeout(resolve, pauseDuration));
+            clickCount = 0;
+          }
+          setTimeout(continuousClick, 100);
         } else {
           passCount++;
           if (passCount >= 2) {
             stopConfirmTasks();
           } else {
-            setTimeout(continuousClick, 2000);
+            setTimeout(continuousClick, 100);
           }
         }
       }
@@ -363,6 +505,10 @@
               if (submitButton) {
                 setTimeout(() => {
                   submitButton.click();
+                  submitButton.click();
+                  submitButton.click();
+                  submitButton.click();
+                  submitButton.click();
                 }, 500);
                 stopHandlePromocode();
               } else {
@@ -408,12 +554,16 @@
   }
 
   function autoSell() {
+    if (isAutoMode) return;
     var button = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
     if (button) {
       button.click();
-      if (!isConfirmingTasks && toggleSwitch.checked) {
-        startConfirmTasks();
+      if (window.location.href === 'https://freeru.me/games/cases/promocodecase') {
+        if (!isConfirmingTasks && toggleSwitch.checked) {
+          startConfirmTasks();
+        }
       }
+      //setTimeout(clickFreeCasesLink, 1000);
     }
   }
 
@@ -432,24 +582,56 @@
     }
   });
 
-  function textOnPageCheck() {
-    const observer = new MutationObserver(() => {
-      if (document.body.innerText.includes("Повторно")) {
-        const freeCasesLink = document.querySelector('li.breadcrumb__item a[href="/games/cases"]');
-        if (freeCasesLink) {
-          freeCasesLink.click();
+  function handleCaseOpening() {
+    const openButton = document.querySelector('.case-items-tape__open-button.btn.btn-blue.btn-lg');
+    if (openButton) {
+      openButton.click();
+      setTimeout(() => {
+        const sellButton = document.querySelector('.case-available-item-buttons__sell-button.btn.btn-bordered');
+        if (sellButton) {
+          sellButton.click();
+          setTimeout(clickFreeCasesLink, 1000);
+        } else {
+          clickFreeCasesLink();
         }
-      }
-    });
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
+      }, 2000);
+    } else {
+      console.log("Case opening button not found, returning to main page");
+      clickFreeCasesLink();
+    }
   }
+
+  function clickFreeCasesLink() {
+    const freeCasesLink = document.querySelector('li[data-v-939007d8].breadcrumb__item a[href="/games/cases"]');
+    if (freeCasesLink) {
+      freeCasesLink.click();
+      setTimeout(observePageChanges, 1000);
+    } else {
+      console.log("Free cases link not found");
+      if (isAutoMode) {
+        setTimeout(clickNextCase, 1000);
+      }
+    }
+  }
+
+  //function textOnPageCheck() {
+  //  const observer = new MutationObserver(() => {
+  //    if (document.body.innerText.includes("Повторно")) {
+  //      const freeCasesLink = document.querySelector('li.breadcrumb__item a[href="/games/cases"]');
+  //      if (freeCasesLink) {
+  //        freeCasesLink.click();
+  //      }
+  //    }
+  //  });
+  //  observer.observe(document.body, {
+  //    childList: true,
+  //    subtree: true,
+  //    characterData: true
+  //  });
+  //}
 
   setInterval(giveawayClick, 300);
   setInterval(emulateClick, 300);
-  textOnPageCheck();
-
+  //textOnPageCheck();
+  observePageChanges();
 })();
