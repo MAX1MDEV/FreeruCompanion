@@ -1,4 +1,10 @@
-## Changelog
+## Changelog  
+### v9.0 (2025-03-19)  
+* Fixed automation of task execution, script adapted to changes on the site.
+* Emulation of tab opening, tasks are now successfully completed without navigating to external pages.
+* Optimization of link processing, fixed bugs with incorrect redirects.
+* General improvements, increased stability and speed.
+***
 ### v8.5 (2024-11-30)  
 * Implemented `textOnPageCheck()` function that provides automatic transition to the main page of cases when the selected case is no longer available for opening.
 ***
@@ -65,6 +71,12 @@
 ***
 
 ## Список изменений
+### v9.0 (2025-03-19)  
+* Исправлена автоматизация выполнения заданий, скрипт адаптирован к изменениям на сайте.  
+* Эмуляция открытия вкладок, задания теперь успешно выполняются без перехода на внешние страницы.  
+* Оптимизация обработки ссылок, исправлены баги с некорректными редиректами.  
+* Общие улучшения, повышение стабильности и скорости работы.  
+***
 ### v8.5 (2024-11-30)  
 * Реализована функция `textOnPageCheck()`, обеспечивающая автоматический переход на главную страницу кейсов в случаях, когда выбранный кейс более недоступен для открытия.
 ***
