@@ -1,4 +1,7 @@
 ## Changelog  
+### v9.1 (2025-03-27)
+* Several mini-fixes and optimizations
+***
 ### v9.0 (2025-03-19)  
 * Fixed automation of task execution, script adapted to changes on the site.
 * Emulation of tab opening, tasks are now successfully completed without navigating to external pages.
@@ -71,6 +74,9 @@
 ***
 
 ## Список изменений
+### v9.1 (2025-03-27)
+* Несколько мини-исправлений и оптимизация
+***
 ### v9.0 (2025-03-19)  
 * Исправлена автоматизация выполнения заданий, скрипт адаптирован к изменениям на сайте.  
 * Эмуляция открытия вкладок, задания теперь успешно выполняются без перехода на внешние страницы.  
